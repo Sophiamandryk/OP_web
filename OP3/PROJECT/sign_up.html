@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ТРЕБА - Реєстрація</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Arial', sans-serif;
+        }
+        
+        body {
+            background-color: #64684B;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+        
+        .nav {
+            display: flex;
+            justify-content: center;
+            padding: 20px;
+            gap: 40px;
+        }
+        
+        .nav a {
+            color: white;
+            text-decoration: none;
+            font-size: 18px;
+        }
+        
+        .main-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            flex: 1;
+        }
+        
+        .left-content {
+            max-width: 600px;
+        }
+        
+        .title {
+            font-size: 90px;
+            color: white;
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+        
+        .fist-emoji {
+            font-size: 80px;
+            vertical-align: middle;
+        }
+        
+        .subtitle {
+            font-size: 36px;
+            color: white;
+            margin-bottom: 20px;
+        }
+        
+        .emphasis {
+            font-weight: bold;
+        }
+        
+        .registration-card {
+            background-color: #d2e1b5;
+            border-radius: 15px;
+            padding: 30px;
+            width: 400px;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+        }
+        
+        .card-title {
+            font-size: 32px;
+            margin-bottom: 20px;
+            color: #333;
+            text-align: center;
+        }
+        
+        .form-group {
+            margin-bottom: 15px;
+        }
+        
+        .form-label {
+            display: block;
+            margin-bottom: 5px;
+            color: #333;
+        }
+        
+        .form-input {
+            width: 100%;
+            padding: 12px;
+            border: none;
+            border-radius: 25px;
+            font-size: 16px;
+        }
+        
+        .password-input {
+            position: relative;
+        }
+        
+        .password-input .form-input {
+            padding-left: 40px;
+        }
+        
+        .password-icon {
+            position: absolute;
+            left: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #999;
+        }
+        
+        .submit-btn {
+            width: 100%;
+            padding: 15px;
+            border: none;
+            border-radius: 25px;
+            background-color: #484848;
+            color: white;
+            font-size: 18px;
+            cursor: pointer;
+            margin-top: 15px;
+        }
+        
+        .login-links {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 15px;
+            font-size: 14px;
+        }
+        
+        .login-links a {
+            color: #333;
+            text-decoration: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="nav">
+        <a href="#">Про нас</a>
+        <a href="#">Головна</a>
+    </div>
+    
+    <div class="main-content">
+        <div class="left-content">
+            <h1 class="title">ТРЕБА <span class="fist-emoji">✊</span></h1>
+            <p class="subtitle">На фронті не можна чекати - якщо захисникам <span class="emphasis">треба</span>, значить <span class="emphasis">треба</span>.</p>
+        </div>
+        
+        <div class="registration-card">
+            <h2 class="card-title">Зареєструватися</h2>
+            <form>
+                <div class="form-group">
+                    <label class="form-label">Ім'я</label>
+                    <input type="text" class="form-input" placeholder="Марія">
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label">Прізвище</label>
+                    <input type="text" class="form-input" placeholder="Бойко">
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label">Email</label>
+                    <input type="email" class="form-input" placeholder="slava.ukraini@">
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label">Ім'я користувача</label>
+                    <input type="text" class="form-input" placeholder="@mariaboyko">
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label">Придумайте пароль</label>
+                    <div class="password-input">
+                        <span class="password-icon">🔒</span>
+                        <input type="password" class="form-input" placeholder="Введіть пароль">
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label">Введіть пароль повторно</label>
+                    <div class="password-input">
+                        <span class="password-icon">🔒</span>
+                        <input type="password" class="form-input" placeholder="Повторіть пароль">
+                    </div>
+                </div>
+                
+                <button type="submit" class="submit-btn">Продовжити</button>
+                
+                <div class="login-links">
+                    <a href="#">У же маєте акаунт?</a>
+                    <a href="#">Увійти</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</body>
+</html>
