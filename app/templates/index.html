@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ТРЕБА - Підтримка захисників</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-links">
+            <a href="#">Про нас</a>
+            <a href="#">Головна</a>
+        </div>
+    </nav>
+    
+    <!-- Hero Section -->
+    <section class="hero">
+        <h1>ТРЕБА 👊</h1>
+        <p>На фронті не можна чекати - якщо захисникам <strong>треба</strong>, значить <strong>треба</strong>.</p>
+        <div class="hero-buttons">
+            <a href="#" class="btn btn-outline login-btn">Увійти</a>
+            <a href="#" class="btn btn-light register-btn">Зареєструватися</a>
+        </div>
+    </section>
+    
+    <!-- Features Section with Eclipse Background -->
+    <div class="features-container">
+        <div class="eclipse-bg"></div>
+        <section class="features">
+            <h2>Про ТРЕБА</h2>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <img src="/api/placeholder/40/40" alt="Icon">
+                    <h3>Запити з гарячих точок</h3>
+                    <p>опис опис опис опис опис опис опис опис опис опис опис опис опис опис</p>
+                    <a href="#" class="btn btn-outline">Зробити запит</a>
+                </div>
+                <div class="feature-card">
+                    <img src="/api/placeholder/40/40" alt="Icon">
+                    <h3>LALALLA</h3>
+                    <p>lalalala</p>
+                </div>
+                <div class="feature-card">
+                    <img src="/api/placeholder/40/40" alt="Icon">
+                    <h3>LALLALA</h3>
+                    <p>lalalala</p>
+                </div>
+                <div class="feature-card">
+                    <img src="/api/placeholder/40/40" alt="Icon">
+                    <h3>LALALA</h3>
+                    <p>lalalalallalalalala</p>
+                </div>
+                <div class="feature-card">
+                    <img src="/api/placeholder/40/40" alt="Icon">
+                    <h3>LALALLA</h3>
+                    <p>lalalala</p>
+                </div>
+                <div class="feature-card">
+                    <img src="/api/placeholder/40/40" alt="Icon">
+                    <h3>LALLALA</h3>
+                    <p>lalalala</p>
+                </div>
+            </div>
+        </section>
+    </div>
+    
+    <!-- Auth Container (for both Login and Register forms) -->
+    <div class="auth-container" id="authContainer">
+        <!-- Login Form -->
+        <div class="auth-form login-form" id="loginForm">
+            <h3>Увійти</h3>
+            <form id="loginFormElement">
+                <div class="form-group">
+                    <label for="email">Email Адреса</label>
+                    <input type="email" id="email" name="email" class="form-control" placeholder="name.surname@" required>
+                    <div class="form-error" id="emailError">Введіть коректну email адресу</div>
+                </div>
+                <div class="form-group">
+                    <label for="password">Пароль</label>
+                    <input type="password" id="password" name="password" class="form-control" placeholder="Введіть пароль" required>
+                    <div class="form-error" id="passwordError">Пароль повинен містити мінімум 6 символів</div>
+                </div>
+                <div class="forgot-password">
+                    <a href="#">Забули пароль?</a>
+                </div>
+                <button type="submit" class="btn btn-dark">Продовжити</button>
+                <div class="loading-indicator" id="loginLoading">Зачекайте, будь ласка...</div>
+                <div class="auth-footer">
+                    <span>Не маєте акаунта?</span>
+                    <a href="#" class="switch-to-register">Зареєструватися</a>
+                </div>
+            </form>
+        </div>
+        
+        <!-- Register Form -->
+        <div class="auth-form register-form" id="registerForm">
+            <h3>Зареєструватися</h3>
+            <form id="registerFormElement">
+                <div class="form-group">
+                    <label for="reg-name">Ім'я</label>
+                    <input type="text" id="reg-name" name="name" class="form-control" placeholder="Марія" required>
+                    <div class="form-error" id="nameError">Введіть ім'я</div>
+                </div>
+                <div class="form-group">
+                    <label for="reg-surname">Прізвище</label>
+                    <input type="text" id="reg-surname" name="surname" class="form-control" placeholder="Бойко" required>
+                    <div class="form-error" id="surnameError">Введіть прізвище</div>
+                </div>
+                <div class="form-group">
+                    <label for="reg-email">Email</label>
+                    <input type="email" id="reg-email" name="email" class="form-control" placeholder="slava.ukraini@" required>
+                    <div class="form-error" id="regEmailError">Введіть коректну email адресу</div>
+                </div>
+                <div class="form-group">
+                    <label for="reg-username">Ім'я користувача</label>
+                    <input type="text" id="reg-username" name="username" class="form-control" placeholder="@mariaboyko" required>
+                    <div class="form-error" id="usernameError">Введіть ім'я користувача</div>
+                </div>
+                <div class="form-group">
+                    <label for="reg-password">Придумайте пароль</label>
+                    <input type="password" id="reg-password" name="password" class="form-control" placeholder="Введіть пароль" required>
+                    <div class="form-error" id="regPasswordError">Пароль повинен містити мінімум 6 символів</div>
+                </div>
+                <div class="form-group">
+                    <label for="reg-password2">Введіть пароль повторно</label>
+                    <input type="password" id="reg-password2" name="password2" class="form-control" placeholder="Повторіть пароль" required>
+                    <div class="form-error" id="password2Error">Паролі не співпадають</div>
+                </div>
+                <button type="submit" class="btn btn-dark">Продовжити</button>
+                <div class="loading-indicator" id="registerLoading">Зачекайте, будь ласка...</div>
+                <div class="auth-footer">
+                    <span>Вже маєте акаунт?</span>
+                    <a href="#" class="switch-to-login">Увійти</a>
+                </div>
+            </form>
+        </div>
+    </div>
+    
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="social-links">
+            <a href="#"><i class="fab fa-facebook-f"></i>F</a>
+            <a href="#"><i class="fab fa-instagram"></i>I</a>
+        </div>
+        <div class="copyright">
+            launched in 2023
+        </div>
+    </footer>
+
+    <script src="/static/js/main.js"></script>
+</body>
+</html>
