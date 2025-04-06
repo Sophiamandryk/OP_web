@@ -141,6 +141,12 @@
             background-color: rgba(255, 255, 255, 0.8);
             border-radius: 20px;
         }
+        .photo-placeholder2 {
+            width: 100%;
+            height: 100%;
+            background-color: rgba(255, 255, 255, 0.8);
+            border-radius: 20px;
+        }
 
         .card-title {
             font-size: 32px;
@@ -170,8 +176,8 @@
 
         .card-button {
             background-color: transparent;
-            border: 1px solid #5c6642;
-            color: #5c6642;
+            border: 1px solid #ffffff;
+            color: #ffffff;
             padding: 10px 30px;
             border-radius: 30px;
             cursor: pointer;
@@ -262,26 +268,22 @@
         }
 
         .footer-bottom {
+            padding: 20px 40px;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding-top: 20px;
-            font-size: 12px;
+            border-top: 1px solid rgba(255,255,255,0.2);
         }
 
-        .social-icons {
+    
+        .social-links {
             display: flex;
-            gap: 10px;
+            gap: 15px;
         }
-
-        .social-icon {
-            width: 30px;
-            height: 30px;
-            border-radius: 50%;
-            background-color: white;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+        
+        .social-links a {
+            color: white;
+            text-decoration: none;
         }
         
         .arrow-right {
@@ -367,7 +369,14 @@
         }
 
         .modal-progress {
+            margin-top: 20px;
             margin-bottom: 15px;
+        }
+        
+        .progress-status-wrapper {
+        display: flex;
+        align-items: center;
+        gap: 20px;
         }
 
         .progress-container {
@@ -395,6 +404,10 @@
             height: 100%;
             width: 50%;
             border-radius: 20px;
+            position: absolute;
+            left: 0;
+            top: 0;
+            z-index: 1;
         }
 
         .status-label {
@@ -422,6 +435,7 @@
         }
 
         .modal-location {
+            flex: 1;
             font-size: 16px;
             font-weight: 500;
             color: rgba(51, 51, 51, 0.7);
@@ -432,28 +446,45 @@
             display: grid;
             grid-template-columns: 2fr 1fr;
             gap: 30px;
+            align-items: flex-start;
         }
-
+        
+        .modal-info {
+        flex: 2;
+        font-size: 16px;
+        line-height: 1.6;
+        color: rgba(51, 51, 51, 0.8);
+        overflow: auto;
+        max-height: 700px;
+        word-wrap: break-word;
+        }
         .modal-description {
             font-size: 14px;
             line-height: 1.6;
             color: rgba(51, 51, 51, 0.8);
             margin-bottom: 30px;
+            max-width: 600px;
+            max-height: 700px;
+            word-wrap: break-word;
         }
 
         .modal-image {
-            width: 100%;
-            height: 200px;
+            flex: 1;
+            height: 500px;
+            max-width: 450px;
             background-color: rgba(255, 255, 255, 0.5);
             border-radius: 20px;
             display: flex;
             align-items: center;
             justify-content: center;
+            overflow: hidden;
         }
 
         .modal-image img {
-            max-width: 80%;
-            max-height: 80%;
+            max-width: 100%;
+            max-height: 100%;
+            border-radius: 20px;
+            object-fit: cover;
         }
 
         .contribute-button {
@@ -471,10 +502,16 @@
             float: right;
         }
 
+        
+
         .contribute-button:hover {
             background-color: #5c6642;
         }
     </style>
+</head>
+</head>
+    <!-- Підключення Font Awesome через CDN -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
 <body>
     <div class="navbar">
@@ -643,13 +680,15 @@
                 </div>
             </div>
         </div>
-        <div class="footer-bottom">
-            <div class="social-icons">
-                <div class="social-icon">f</div>
-                <div class="social-icon">in</div>
+        <footer class="footer-bottom">
+            <div class="social-links">
+                <!-- Іконка Facebook -->
+                <a href="#" target="_blank"><i class="fab fa-facebook-f"></i> Facebook</a>
+        
+                <!-- Іконка Instagram -->
+                <a href="#" target="_blank"><i class="fab fa-instagram"></i> Instagram</a>
             </div>
-            <div>launched in 2023</div>
-        </div>
+        </footer>
     </div>
 
     <!-- Modal Overlay -->
@@ -659,23 +698,32 @@
             <button class="next-button">→</button>
             
             <div class="modal-progress">
-                <div class="progress-container">
-                    <div class="progress-text">50%</div>
+                <div class="progress-status-wrapper">
+                  <div class="progress-container">
                     <div class="progress-fill"></div>
+                    <span class="progress-text">50%</span>
+                  </div>
+                  <span class="status-label">Нагально</span>
                 </div>
-                <div class="status-label">Нагально</div>
             </div>
 
             <h2 class="modal-title">Закрито на 50%</h2>
-            <div class="modal-region">Підрозділ, Область</div>
-            <div class="modal-location">Позивний : ХАРВІ</div>
-
+            
             <div class="modal-content-split">
-                <div class="modal-description">
-                    ОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОпис
+                <!-- Текст зліва -->
+                <div class="modal-info">
+                    <div class="modal-region">Підрозділ, Область</div>
+                    <div class="modal-location">Позивний : ХАРВІ</div>
+                    <div class="modal-description">
+                        ОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОпис
+                    </div>
                 </div>
+            
+                <!-- Фото справа -->
                 <div class="modal-image">
-                    <img src="#" alt="Photo Placeholder">
+                    <div class="photo-placeholder2" onclick="document.getElementById('imageUpload').click()">
+                        <input type="file" id="imageUpload" accept="image/*" style="display:none" onchange="previewImage(event)">
+                    </div>
                 </div>
             </div>
 
