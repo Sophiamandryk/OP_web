@@ -92,6 +92,17 @@ async def get_current_user(token: Annotated[str, Depends(oauth2_scheme)], db: Se
 async def read_root(request: Request):
     return templates.TemplateResponse("index.html", {"request": request})
 
+@app.post("/login")
+async def login(form_data: OAuth2PasswordRequestForm = Depends(), db: Session = Depends(get_db)):
+    user = crud.verify_user(db, form_data.username, form_data.password)
+    if not user:
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED,
+            detail="Неправильний email або пароль",
+            headers={"WWW-Authenticate": "Bearer"},
+        )
+    return {"success": True, "message": "Успішний вхід", "user_id": user.id}
+
 @app.post("/token")
 async def login_for_access_token(
     form_data: Annotated[OAuth2PasswordRequestForm, Depends()],

@@ -6,6 +6,14 @@ from .schemas import UserCreate, NeedCreate
 # Ініціалізація для хешування паролів
 pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 
+def verify_user(db: Session, email: str, password: str):
+    user = get_user_by_email(db, email)
+    if not user:
+        return None
+    if not pwd_context.verify(password, user.hashed_password):
+        return None
+    return user
+
 def get_user_by_email(db: Session, email: str):
     return db.query(models.User).filter(models.User.email == email).first()
 
