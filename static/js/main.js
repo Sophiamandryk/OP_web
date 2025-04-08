@@ -203,13 +203,37 @@ registerFormElement.addEventListener('submit', function(e) {
         // Show loading indicator
         registerLoading.style.display = 'block';
         
-        // Simulate registration delay
-        setTimeout(function() {
+        // Send registration data to the backend
+        fetch('/users/', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                first_name: name,
+                last_name: surname,
+                email: email,
+                username: username,
+                password: password
+            })
+        })
+        .then(response => response.json())
+        .then(data => {
             // Hide loading indicator
             registerLoading.style.display = 'none';
             
-            // Redirect to needs page
-            redirectToNeeds();
-        }, 1500);
+            if (data.id) {
+                // Redirect to needs page on success
+                redirectToNeeds();
+            } else {
+                // Show error message
+                alert(data.detail || 'Помилка реєстрації. Спробуйте ще раз.');
+            }
+        })
+        .catch(error => {
+            registerLoading.style.display = 'none';
+            alert('Помилка при реєстрації. Спробуйте ще раз.');
+            console.error('Error:', error);
+        });
     }
 });
