@@ -56,6 +56,7 @@
             background-color: #c5d5b5;
             border-radius: 20px;
             padding: 5px;
+            cursor: pointer; /* Added cursor pointer to indicate it's clickable */
         }
 
         .user-name {
@@ -223,6 +224,7 @@
         .footer-logo {
             font-size: 42px;
             font-weight: bold;
+            cursor: pointer; /* Added cursor pointer to indicate it's clickable */
         }
 
         .login-form {
@@ -508,8 +510,6 @@
             background-color: #5c6642;
         }
     </style>
-</head>
-</head>
     <!-- Підключення Font Awesome через CDN -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
@@ -521,7 +521,7 @@
             <a href="#" class="nav-link">Головна</a>
             <a href="#" class="nav-link">Вийти</a>
         </div>
-        <div class="user-profile">
+        <div class="user-profile" onclick="goToProfile()">
             <div class="user-name">@user_name</div>
             <div class="status-badge">Need</div>
         </div>
@@ -659,7 +659,7 @@
 
     <div class="footer">
         <div class="footer-top">
-            <div class="footer-logo">ТРЕБА</div>
+            <div class="footer-logo" onclick="goToProfile()">ТРЕБА</div>
             <div class="login-form">
                 <h3 class="form-title">Увійти</h3>
                 <div class="form-group">
@@ -748,6 +748,11 @@
                 closeModal();
             }
         });
+
+        // Function to redirect to profile page
+        function goToProfile() {
+            window.location.href = 'profile.html';
+        }
     </script>
 </body>
 </html>
