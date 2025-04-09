@@ -518,7 +518,7 @@
         <button class="cta-button">Зробити запит</button>
         <div class="nav-links">
             <a href="#" class="nav-link">Про нас</a>
-            <a href="#" class="nav-link">Головна</a>
+            <a href="#" class="nav-link" id="homeLink">Головна</a>
             <a href="#" class="nav-link">Вийти</a>
         </div>
         <div class="user-profile" onclick="goToProfile()">
@@ -752,6 +752,26 @@
         // Function to redirect to profile page
         function goToProfile() {
             window.location.href = 'profile.html';
+        }
+        
+        // Add event listener to the "Головна" link
+        document.getElementById('homeLink').addEventListener('click', function(event) {
+            event.preventDefault(); // Prevent default link behavior
+            // Redirect to indexs_new.html when clicked
+            window.location.href = 'indexs_new.html';
+        });
+        
+        // Function to preview uploaded image
+        function previewImage(event) {
+            const reader = new FileReader();
+            reader.onload = function() {
+                const img = document.createElement('img');
+                img.src = reader.result;
+                const placeholder = document.querySelector('.photo-placeholder2');
+                placeholder.innerHTML = '';
+                placeholder.appendChild(img);
+            }
+            reader.readAsDataURL(event.target.files[0]);
         }
     </script>
 </body>

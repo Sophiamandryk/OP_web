@@ -90,6 +90,7 @@
             color: var(--text-color);
             font-weight: bold;
             margin-bottom: 20px;
+            cursor: pointer;
         }
         
         .profile-header {
@@ -148,7 +149,7 @@
         <div class="nav-logo">Зробити запит</div>
         <div class="nav-links">
             <a href="#" class="nav-link">Про нас</a>
-            <a href="#" class="nav-link">Головна</a>
+            <a href="#" class="nav-link" id="homeLink">Головна</a>
             <a href="#" class="nav-link">Вийти</a>
         </div>
         <div class="user-area">
@@ -158,7 +159,7 @@
     </nav>
     
     <div class="profile-container">
-        <a href="#" class="back-button">
+        <a href="#" class="back-button" id="backButton">
             ← Профіль користувача
         </a>
         
@@ -190,6 +191,20 @@
         document.getElementById('editProfileButton').addEventListener('click', function() {
             // Redirect to change_profile.html when clicked
             window.location.href = 'change_profile.html';
+        });
+        
+        // Add event listener to the back button (both the arrow and "Профіль користувача" text)
+        document.getElementById('backButton').addEventListener('click', function(event) {
+            event.preventDefault(); // Prevent default link behavior
+            // Redirect to detailed_needs.html when clicked
+            window.location.href = 'detailed_needs.html';
+        });
+
+        // Add event listener to the "Головна" navigation link
+        document.getElementById('homeLink').addEventListener('click', function(event) {
+            event.preventDefault(); // Prevent default link behavior
+            // Redirect to indexs_new.html when clicked
+            window.location.href = 'indexs_new.html';
         });
     </script>
 </body>
