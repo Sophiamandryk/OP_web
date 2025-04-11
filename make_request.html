@@ -1,0 +1,461 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Зробити запит | ТРЕБА</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+        
+        body {
+            background-color: #f5f5f5;
+        }
+        
+        .header {
+            background-color: #5e6547;
+            padding: 15px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            color: white;
+        }
+        
+        .nav {
+            display: flex;
+            gap: 20px;
+        }
+        
+        .nav a {
+            color: white;
+            text-decoration: none;
+            font-size: 18px;
+        }
+        
+        .user-section {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .user-badge {
+            background-color: #d3dbc6;
+            border-radius: 20px;
+            padding: 8px 15px;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            cursor: pointer;
+        }
+        
+        .need-badge {
+            background-color: #f7b733;
+            color: white;
+            padding: 2px 8px;
+            border-radius: 10px;
+            font-size: 14px;
+        }
+        
+        .needs-button {
+            background-color: transparent;
+            color: white;
+            border: 2px solid white;
+            border-radius: 20px;
+            padding: 8px 20px;
+            cursor: pointer;
+            font-size: 16px;
+            text-decoration: none;
+            display: inline-block;
+        }
+        
+        .main-content {
+            position: relative;
+            min-height: 500px;
+        }
+        
+        .form-container {
+            background-color: #d3dbc6;
+            margin: 20px auto;
+            border-radius: 20px;
+            padding: 30px;
+            max-width: 700px;
+            position: relative;
+        }
+        
+        .back-button {
+            position: absolute;
+            left: 20px;
+            top: 30px;
+            background-color: white;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-decoration: none;
+            color: #333;
+            font-size: 20px;
+        }
+        
+        .form-title {
+            color: #333;
+            margin-bottom: 15px;
+            margin-left: 40px;
+            font-size: 18px;
+        }
+        
+        .form-row {
+            margin-bottom: 15px;
+        }
+        
+        .radio-group {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+        
+        .radio-button {
+            background-color: white;
+            border-radius: 20px;
+            padding: 8px 20px;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            cursor: pointer;
+        }
+        
+        .radio-button input {
+            margin-right: 5px;
+        }
+        
+        .form-input {
+            width: 100%;
+            padding: 12px 15px;
+            border: none;
+            border-radius: 10px;
+            background-color: white;
+            font-size: 16px;
+        }
+        
+        .input-with-icon {
+            position: relative;
+        }
+        
+        .input-icon {
+            position: absolute;
+            left: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+        }
+        
+        .input-with-icon .form-input {
+            padding-left: 40px;
+        }
+        
+        .form-label {
+            display: block;
+            margin-bottom: 8px;
+            color: #555;
+            font-size: 14px;
+        }
+        
+        .submit-button {
+            background-color: #4a4a4a;
+            color: white;
+            border: none;
+            border-radius: 10px;
+            padding: 12px;
+            width: 100%;
+            font-size: 16px;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+        
+        .image-upload {
+            display: flex;
+            justify-content: center;
+            margin: 30px 0;
+        }
+        
+        .image-placeholder {
+            width: 120px;
+            height: 90px;
+            border: 2px dashed #888;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            color: #555;
+        }
+        
+        .ukraine-map {
+            background-color: #f1f1f1;
+            padding: 50px 0;
+            border-radius: 100% 100% 0 0;
+            display: flex;
+            justify-content: center;
+            margin-top: -20px;
+        }
+        
+        .map-img {
+            max-width: 60%;
+            opacity: 0.8;
+        }
+        
+        .footer {
+            background-color: #5e6547;
+            color: white;
+            padding: 40px;
+            position: relative;
+        }
+        
+        .footer-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            font-size: 60px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+        
+        .login-section {
+            max-width: 300px;
+        }
+        
+        .login-title {
+            margin-bottom: 15px;
+            font-size: 20px;
+        }
+        
+        .login-input {
+            width: 100%;
+            padding: 12px 15px;
+            border: none;
+            border-radius: 20px;
+            background-color: white;
+            font-size: 16px;
+            margin-bottom: 10px;
+        }
+        
+        .forgot-password {
+            text-align: right;
+            margin: 10px 0;
+            font-size: 14px;
+        }
+        
+        .forgot-password a {
+            color: white;
+            text-decoration: none;
+        }
+        
+        .login-button {
+            background-color: #4a4a4a;
+            color: white;
+            border: none;
+            border-radius: 20px;
+            padding: 12px;
+            width: 100%;
+            font-size: 16px;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+        
+        .signup-text {
+            text-align: center;
+            margin-top: 15px;
+            font-size: 14px;
+        }
+        
+        .signup-text a {
+            color: white;
+            text-decoration: none;
+        }
+        
+        .social-icons {
+            display: flex;
+            gap: 15px;
+            margin-top: 30px;
+        }
+        
+        .social-icon {
+            width: 30px;
+            height: 30px;
+            background-color: white;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .copyright {
+            text-align: right;
+            font-size: 12px;
+            margin-top: 30px;
+        }
+        
+        @media (max-width: 768px) {
+            .footer-content {
+                flex-direction: column;
+                gap: 30px;
+            }
+            
+            .login-section {
+                width: 100%;
+                max-width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <a href="detailed_needs.html" class="needs-button" id="needsButton">Потреби</a>
+        <nav class="nav">
+            <a href="#">Про нас</a>
+            <a href="#">Головна</a>
+            <a href="#">Вийти</a>
+        </nav>
+        <div class="user-section">
+            <div class="user-badge" id="profileButton">
+                @user_name
+                <span class="need-badge">Need</span>
+            </div>
+        </div>
+    </header>
+    
+    <main class="main-content">
+        <div class="form-container">
+            <a href="#" class="back-button">←</a>
+            <h2 class="form-title">Вид запоторення?</h2>
+            
+            <div class="radio-group">
+                <label class="radio-button">
+                    <input type="radio" name="requestType" checked>
+                    Так
+                </label>
+                <label class="radio-button">
+                    <input type="radio" name="requestType">
+                    Ні
+                </label>
+            </div>
+            
+            <form>
+                <div class="form-row">
+                    <input type="text" class="form-input" placeholder="Назва запиту">
+                </div>
+                
+                <div class="form-row">
+                    <label class="form-label">Ваш підрозділ</label>
+                    <input type="text" class="form-input" placeholder="">
+                </div>
+                
+                <div class="form-row">
+                    <label class="form-label">Область проведення бойових дій</label>
+                    <input type="text" class="form-input" placeholder="">
+                </div>
+                
+                <div class="form-row">
+                    <label class="form-label">Вкажіть область</label>
+                    <input type="text" class="form-input" placeholder="">
+                </div>
+                
+                <div class="form-row">
+                    <label class="form-label">Опис предмету</label>
+                    <div class="input-with-icon">
+                        <span class="input-icon">📋</span>
+                        <input type="text" class="form-input" placeholder="Введіть текст">
+                    </div>
+                </div>
+                
+                <div class="form-row">
+                    <label class="form-label">Опишіть більше інформації</label>
+                    <div class="input-with-icon">
+                        <span class="input-icon">🔍</span>
+                        <input type="text" class="form-input" placeholder="Пошукати запит">
+                    </div>
+                </div>
+                
+                <div class="image-upload">
+                    <div class="image-placeholder">
+                        <span>📷</span>
+                        <span>Додати фото</span>
+                    </div>
+                </div>
+                
+                <button type="submit" class="submit-button">Оформити запит</button>
+            </form>
+        </div>
+        
+        <div class="ukraine-map">
+            <img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iODAwIiBoZWlnaHQ9IjUwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cGF0aCBkPSJNMjAgMjBMNTAgMzBMNzAgNDBMOTAgMzBMMTIwIDQwTDE1MCA2MEwxODAgODBMMjAwIDcwTDIzMCA4MEwyNjAgNzBMMjgwIDkwTDMxMCAxMDBMMzQwIDkwTDM3MCAxMTBMNDAwIDEyMEw0MzAgMTAwTDQ2MCAxMjBMNTAwIDExMEw1MzAgMTMwTDU2MCAxMjBMNTkwIDE0MEw2MjAgMTYwTDY0MCAxNTBMNjcwIDE3MEw3MDAgMTYwTDczMCAxODBMNzUwIDE3MEw3ODAgMTkwIiBzdHJva2U9IiM2NjYiIGZpbGw9Im5vbmUiLz48L3N2Zz4=" alt="Map of Ukraine" class="map-img">
+        </div>
+    </main>
+    
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="logo-section">
+                <h1 class="logo" id="logoButton">ТРЕБА</h1>
+                <div class="social-icons">
+                    <a href="#" class="social-icon">f</a>
+                    <a href="#" class="social-icon">in</a>
+                </div>
+            </div>
+            
+            <div class="login-section">
+                <h2 class="login-title">Увійти</h2>
+                <div class="form-row">
+                    <label class="form-label">Email Адреса</label>
+                    <input type="email" class="login-input" placeholder="name.surname@">
+                </div>
+                
+                <div class="form-row">
+                    <label class="form-label">Пароль</label>
+                    <div class="input-with-icon">
+                        <span class="input-icon">🔒</span>
+                        <input type="password" class="login-input" placeholder="Введіть пароль">
+                    </div>
+                </div>
+                
+                <div class="forgot-password">
+                    <a href="#">Забули пароль?</a>
+                </div>
+                
+                <button class="login-button">Продовжити</button>
+                
+                <div class="signup-text">
+                    <span>Не маєте акаунт?</span>
+                    <a href="#">Зареєструватися</a>
+                </div>
+            </div>
+        </div>
+        
+        <div class="copyright">
+            copyright © 2023
+        </div>
+    </footer>
+    
+    <script>
+        // Script to handle navigation
+        document.getElementById('needsButton').addEventListener('click', function(e) {
+            e.preventDefault();
+            window.location.href = 'detailed_needs.html';
+        });
+        
+        document.getElementById('profileButton').addEventListener('click', function() {
+            window.location.href = 'profile.html';
+        });
+        
+        document.getElementById('logoButton').addEventListener('click', function() {
+            window.location.href = 'profile.html';
+        });
+        
+    </script>
+</body>
+</html>

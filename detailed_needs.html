@@ -731,5 +731,24 @@
         </div>
     </div>
     <script src="static/js/main.js"></script>
+    <script>
+        // Function to redirect to make_request.html
+        function redirectToMakeRequest() {
+            window.location.href = 'make_request.html';
+        }
+
+        // Add event listener to the request button when the DOM is fully loaded
+        document.addEventListener('DOMContentLoaded', function() {
+            // Find the button with class "cta-button" and text "Зробити запит"
+            const requestButton = document.querySelector('.cta-button');
+            
+            // Add click event listener to the button
+            if (requestButton) {
+                requestButton.addEventListener('click', redirectToMakeRequest);
+            }
+        });
+</script>
+</body>
+</html>
 </body>
 </html>
