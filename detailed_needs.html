@@ -515,7 +515,7 @@
 </head>
 <body>
     <div class="navbar">
-        <button class="cta-button">Зробити запит</button>
+        <button class="cta-button" id="makeRequestButton">Зробити запит</button>
         <div class="nav-links">
             <a href="#" class="nav-link">Про нас</a>
             <a href="#" class="nav-link" id="homeLink">Головна</a>
@@ -727,7 +727,7 @@
                 </div>
             </div>
 
-            <button class="contribute-button">Внести свій вклад</button>
+            <button class="contribute-button" id="contributeButton">Внести свій вклад</button>
         </div>
     </div>
     <script src="static/js/main.js"></script>
@@ -746,9 +746,23 @@
             if (requestButton) {
                 requestButton.addEventListener('click', redirectToMakeRequest);
             }
+
+            // Add event listener to contribute button
+            const contributeButton = document.getElementById('contributeButton');
+            if (contributeButton) {
+                contributeButton.addEventListener('click', function() {
+                    alert('Функціональність внеску у розробці');
+                });
+            }
+            
+            // Add event listener to make request button
+            const makeRequestButton = document.getElementById('makeRequestButton');
+            if (makeRequestButton) {
+                makeRequestButton.addEventListener('click', function() {
+                    navigateTo('make_request.html');
+                });
+            }
         });
-</script>
-</body>
-</html>
+    </script>
 </body>
 </html>

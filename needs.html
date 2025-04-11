@@ -301,13 +301,13 @@
 </head>
 <body>
     <div class="navbar">
-        <button class="cta-button">Зробити запит</button>
+        <button class="cta-button" id="makeRequestButton">Зробити запит</button>
         <div class="nav-links">
-            <a href="#" class="nav-link">Про нас</a>
-            <a href="#" class="nav-link">Головна</a>
-            <a href="#" class="nav-link">Вийти</a>
+            <a href="#" class="nav-link about-link">Про нас</a>
+            <a href="#" class="nav-link home-link">Головна</a>
+            <a href="#" class="nav-link logout-link" id="logoutButton">Вийти</a>
         </div>
-        <div class="user-profile">
+        <div class="user-profile" id="userProfileButton">
             <div class="user-name">@user_name</div>
             <div class="status-badge">Need</div>
         </div>
@@ -336,7 +336,7 @@
                 <div class="card-description">
                     ОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОпис
                 </div>
-                <button class="card-button">Перейти</button>
+                <button class="card-button" onclick="openModal()">Перейти</button>
             </div>
             
             <div class="need-card">
@@ -355,7 +355,7 @@
                 <div class="card-description">
                     ОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОпис
                 </div>
-                <button class="card-button">Перейти</button>
+                <button class="card-button" onclick="openModal()">Перейти</button>
             </div>
             
             <div class="need-card">
@@ -374,7 +374,7 @@
                 <div class="card-description">
                     ОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОпис
                 </div>
-                <button class="card-button">Перейти</button>
+                <button class="card-button" onclick="openModal()">Перейти</button>
             </div>
 
             <!-- Row 2 -->
@@ -394,7 +394,7 @@
                 <div class="card-description">
                     ОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОпис
                 </div>
-                <button class="card-button">Перейти</button>
+                <button class="card-button" onclick="openModal()">Перейти</button>
             </div>
             
             <div class="need-card">
@@ -413,7 +413,7 @@
                 <div class="card-description">
                     ОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОпис
                 </div>
-                <button class="card-button">Перейти</button>
+                <button class="card-button" onclick="openModal()">Перейти</button>
             </div>
             
             <div class="need-card">
@@ -432,7 +432,7 @@
                 <div class="card-description">
                     ОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОпис
                 </div>
-                <button class="card-button">Перейти</button>
+                <button class="card-button" onclick="openModal()">Перейти</button>
             </div>
             
             <div class="arrow-right">→</div>
@@ -475,5 +475,42 @@
         </div>
     </div>
     <script src="static/js/main.js"></script>
+    <script>
+        // Initialize specific needs page elements
+        document.addEventListener('DOMContentLoaded', function() {
+            // Apply event listeners to all "Перейти" buttons
+            document.querySelectorAll('.card-button').forEach(button => {
+                button.addEventListener('click', function() {
+                    navigateTo('detailed_needs.html');
+                });
+            });
+            
+            // Apply event listener to user profile
+            document.querySelector('.user-profile').addEventListener('click', function() {
+                goToProfile();
+            });
+            
+            // Apply event listener to make request button
+            document.querySelector('.cta-button').addEventListener('click', function() {
+                navigateTo('make_request.html');
+            });
+            
+            // Apply event listeners to navigation links
+            document.querySelector('.home-link').addEventListener('click', function(e) {
+                e.preventDefault();
+                goToHome();
+            });
+            
+            document.querySelector('.about-link').addEventListener('click', function(e) {
+                e.preventDefault();
+                alert('Функціональність "Про нас" у розробці');
+            });
+            
+            document.querySelector('.logout-link').addEventListener('click', function(e) {
+                e.preventDefault();
+                logout();
+            });
+        });
+    </script>
 </body>
 </html>
