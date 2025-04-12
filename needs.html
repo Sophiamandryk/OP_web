@@ -336,7 +336,7 @@
                 <div class="card-description">
                     ОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОпис
                 </div>
-                <button class="card-button" onclick="openModal()">Перейти</button>
+                <button class="card-button">Перейти</button>
             </div>
             
             <div class="need-card">
@@ -355,7 +355,7 @@
                 <div class="card-description">
                     ОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОпис
                 </div>
-                <button class="card-button" onclick="openModal()">Перейти</button>
+                <button class="card-button">Перейти</button>
             </div>
             
             <div class="need-card">
@@ -374,7 +374,7 @@
                 <div class="card-description">
                     ОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОпис
                 </div>
-                <button class="card-button" onclick="openModal()">Перейти</button>
+                <button class="card-button">Перейти</button>
             </div>
 
             <!-- Row 2 -->
@@ -394,7 +394,7 @@
                 <div class="card-description">
                     ОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОпис
                 </div>
-                <button class="card-button" onclick="openModal()">Перейти</button>
+                <button class="card-button">Перейти</button>
             </div>
             
             <div class="need-card">
@@ -413,7 +413,7 @@
                 <div class="card-description">
                     ОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОпис
                 </div>
-                <button class="card-button" onclick="openModal()">Перейти</button>
+                <button class="card-button">Перейти</button>
             </div>
             
             <div class="need-card">
@@ -432,7 +432,7 @@
                 <div class="card-description">
                     ОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОписОпис
                 </div>
-                <button class="card-button" onclick="openModal()">Перейти</button>
+                <button class="card-button">Перейти</button>
             </div>
             
             <div class="arrow-right">→</div>
@@ -476,26 +476,35 @@
     </div>
     <script src="static/js/main.js"></script>
     <script>
-        // Initialize specific needs page elements
         document.addEventListener('DOMContentLoaded', function() {
-            // Apply event listeners to all "Перейти" buttons
-            document.querySelectorAll('.card-button').forEach(button => {
+            // Display username
+            displayUsername();
+            
+            // Fix for "Перейти" buttons - replace inline onclick with event listeners
+            const cardButtons = document.querySelectorAll('.card-button');
+            cardButtons.forEach(button => {
+                // Remove existing onclick attribute
+                button.removeAttribute('onclick');
+                // Add event listener
                 button.addEventListener('click', function() {
                     navigateTo('detailed_needs.html');
                 });
             });
             
-            // Apply event listener to user profile
-            document.querySelector('.user-profile').addEventListener('click', function() {
+            // Fix for user profile button
+            document.getElementById('userProfileButton').addEventListener('click', function() {
                 goToProfile();
             });
             
-            // Apply event listener to make request button
-            document.querySelector('.cta-button').addEventListener('click', function() {
-                navigateTo('make_request.html');
-            });
+            // Fix for request button
+            const requestButton = document.querySelector('.cta-button');
+            if (requestButton) {
+                requestButton.addEventListener('click', function() {
+                    navigateTo('make_request.html');
+                });
+            }
             
-            // Apply event listeners to navigation links
+            // Fix for navigation links
             document.querySelector('.home-link').addEventListener('click', function(e) {
                 e.preventDefault();
                 goToHome();

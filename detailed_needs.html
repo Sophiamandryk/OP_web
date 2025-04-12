@@ -732,22 +732,18 @@
     </div>
     <script src="static/js/main.js"></script>
     <script>
-        // Function to redirect to make_request.html
-        function redirectToMakeRequest() {
-            window.location.href = 'make_request.html';
-        }
-
-        // Add event listener to the request button when the DOM is fully loaded
         document.addEventListener('DOMContentLoaded', function() {
-            // Find the button with class "cta-button" and text "Зробити запит"
-            const requestButton = document.querySelector('.cta-button');
+            // Display username
+            displayUsername();
             
-            // Add click event listener to the button
+            // Fix buttons with direct navigation instead of relying on main.js functions
+            const requestButton = document.querySelector('.cta-button');
             if (requestButton) {
-                requestButton.addEventListener('click', redirectToMakeRequest);
+                requestButton.addEventListener('click', function() {
+                    window.location.href = 'make_request.html';
+                });
             }
 
-            // Add event listener to contribute button
             const contributeButton = document.getElementById('contributeButton');
             if (contributeButton) {
                 contributeButton.addEventListener('click', function() {
@@ -755,14 +751,69 @@
                 });
             }
             
-            // Add event listener to make request button
-            const makeRequestButton = document.getElementById('makeRequestButton');
-            if (makeRequestButton) {
-                makeRequestButton.addEventListener('click', function() {
-                    navigateTo('make_request.html');
+            const userProfile = document.querySelector('.user-profile');
+            if (userProfile) {
+                userProfile.addEventListener('click', function() {
+                    window.location.href = 'profile.html';
+                });
+            }
+            
+            // Fix home link
+            const homeLink = document.getElementById('homeLink');
+            if (homeLink) {
+                homeLink.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    
+                    // Check if user is logged in
+                    const userData = localStorage.getItem('userData');
+                    if (userData) {
+                        window.location.href = 'needs.html';
+                    } else {
+                        window.location.href = 'indexs_new.html';
+                    }
+                });
+            }
+            
+            // Fix logout button
+            const logoutButton = document.getElementById('logoutButton');
+            if (logoutButton) {
+                logoutButton.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    localStorage.removeItem('userData');
+                    sessionStorage.removeItem('user');
+                    window.location.href = 'indexs_new.html?showLogin=true';
+                });
+            }
+            
+            // Fix modal buttons
+            document.querySelectorAll('.card-button').forEach(button => {
+                button.addEventListener('click', function() {
+                    document.getElementById('needModal').classList.add('active');
+                    document.body.style.overflow = 'hidden';
+                });
+            });
+            
+            const closeButton = document.querySelector('.back-button');
+            if (closeButton) {
+                closeButton.addEventListener('click', function() {
+                    document.getElementById('needModal').classList.remove('active');
+                    document.body.style.overflow = 'auto';
                 });
             }
         });
+        
+        // Make sure the previewImage function is directly available
+        function previewImage(event) {
+            const file = event.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    const container = event.target.parentElement;
+                    container.innerHTML = `<img src="${e.target.result}" alt="Need Image" style="width:100%;height:100%;object-fit:cover;border-radius:20px;">`;
+                };
+                reader.readAsDataURL(file);
+            }
+        }
     </script>
 </body>
 </html>

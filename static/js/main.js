@@ -11,6 +11,27 @@ const registerFormElement = document.getElementById('registerFormElement');
 const loginLoading = document.getElementById('loginLoading');
 const registerLoading = document.getElementById('registerLoading');
 
+// User Management Functions
+function saveUserData(userData) {
+    localStorage.setItem('userData', JSON.stringify(userData));
+}
+
+function getCurrentUser() {
+    const userData = localStorage.getItem('userData');
+    return userData ? JSON.parse(userData) : null;
+}
+
+function displayUsername() {
+    const userNameElements = document.querySelectorAll('.user-name');
+    const user = getCurrentUser();
+    
+    if (user && userNameElements.length > 0) {
+        userNameElements.forEach(element => {
+            element.textContent = `@${user.username}`;
+        });
+    }
+}
+
 // Navigation Functions
 function navigateTo(page) {
     window.location.href = page;
@@ -49,15 +70,17 @@ function goToProfile() {
 }
 
 function goToHome() {
-    navigateTo('indexs_new.html');
+    const user = getCurrentUser();
+    if (user) {
+        navigateTo('needs.html');
+    } else {
+        navigateTo('indexs_new.html');
+    }
 }
 
 function logout() {
-    // Clear any stored user data (cookies, localStorage, etc)
-    localStorage.removeItem('user');
+    localStorage.removeItem('userData');
     sessionStorage.removeItem('user');
-    
-    // Redirect to home page with login prompt
     navigateTo('indexs_new.html?showLogin=true');
 }
 
@@ -66,7 +89,7 @@ function openModal() {
     const modal = document.getElementById('needModal');
     if (modal) {
         modal.classList.add('active');
-        document.body.style.overflow = 'hidden'; // Prevent scrolling
+        document.body.style.overflow = 'hidden';
     }
 }
 
@@ -74,7 +97,7 @@ function closeModal() {
     const modal = document.getElementById('needModal');
     if (modal) {
         modal.classList.remove('active');
-        document.body.style.overflow = 'auto'; // Enable scrolling
+        document.body.style.overflow = 'auto';
     }
 }
 
@@ -85,19 +108,36 @@ function editProfile() {
 
 // Image Upload Functions
 function previewImage(event) {
+    if (!event || !event.target || !event.target.files || event.target.files.length === 0) {
+        console.error('Invalid file input event');
+        return;
+    }
+    
     const file = event.target.files[0];
     if (file) {
         const reader = new FileReader();
         
         reader.onload = function(e) {
-            const container = event.target.parentElement;
-            // If container is a div with class "photo-placeholder2"
+            // Find the target container using more reliable methods
+            let container;
+            if (event.target.id === 'imageUpload') {
+                container = document.querySelector('.photo-placeholder2');
+            } else {
+                // For profile images
+                container = document.getElementById('profileImageContainer');
+            }
+            
+            if (!container) {
+                console.error('Could not find container for image');
+                return;
+            }
+            
+            // Clear existing content and add the image
             if (container.classList.contains('photo-placeholder2')) {
-                container.innerHTML = `<img src="${e.target.result}" alt="Need Image" style="width:100%;height:100%;object-fit:cover;border-radius:20px;">`;
-            } 
-            // If container is the profile image container
-            else if (container.classList.contains('profile-image')) {
-                container.innerHTML = `<img src="${e.target.result}" alt="Profile Image" style="width:100%;height:100%;object-fit:cover;border-radius:50%;">`;
+                container.innerHTML = `<img src="${e.target.result}" alt="Need Image" style="width:100%;height:100%;object-fit:cover;border-radius:20px;">
+                <input type="file" id="imageUpload" accept="image/*" style="display:none">`;
+            } else {
+                container.innerHTML = `<img src="${e.target.result}" class="avatar-image" alt="Profile Picture">`;
             }
             
             // Show success message if exists
@@ -111,10 +151,47 @@ function previewImage(event) {
         };
         
         reader.readAsDataURL(file);
-        
-        // Here you'd typically upload the file to server
-        console.log('File would be uploaded to server:', file.name);
     }
+}
+
+// Re-attach event listeners for profile images
+function setupProfileImageUploaders() {
+    document.querySelectorAll('.profile-image').forEach(img => {
+        if (!img.hasAttribute('data-listener-attached')) {
+            img.setAttribute('data-listener-attached', 'true');
+            img.addEventListener('click', function() {
+                // Create a direct file input for this specific image
+                const fileInput = document.createElement('input');
+                fileInput.type = 'file';
+                fileInput.accept = 'image/*';
+                fileInput.style.display = 'none';
+                
+                // Handle the file selection directly
+                fileInput.addEventListener('change', function() {
+                    if (this.files && this.files[0]) {
+                        const reader = new FileReader();
+                        reader.onload = function(e) {
+                            img.innerHTML = `<img src="${e.target.result}" class="avatar-image" alt="Profile Picture">`;
+                            // Show success message if it exists
+                            const successMsg = document.getElementById('uploadSuccessMessage');
+                            if (successMsg) {
+                                successMsg.style.display = 'block';
+                                setTimeout(() => {
+                                    successMsg.style.display = 'none';
+                                }, 3000);
+                            }
+                        };
+                        reader.readAsDataURL(this.files[0]);
+                    }
+                });
+                
+                // Trigger file selection
+                document.body.appendChild(fileInput);
+                fileInput.click();
+                document.body.removeChild(fileInput);
+            });
+        }
+    });
 }
 
 // Form Validation Functions
@@ -129,26 +206,22 @@ function isValidPassword(password) {
 
 // Event Listeners Setup - Called when DOM is loaded
 function setupEventListeners() {
-    // Auth buttons
     if (loginBtn) loginBtn.addEventListener('click', (e) => { e.preventDefault(); showLoginForm(); });
     if (registerBtn) registerBtn.addEventListener('click', (e) => { e.preventDefault(); showRegisterForm(); });
     if (switchToRegister) switchToRegister.addEventListener('click', (e) => { e.preventDefault(); showRegisterForm(); });
     if (switchToLogin) switchToLogin.addEventListener('click', (e) => { e.preventDefault(); showLoginForm(); });
     
-    // Close modal when clicking outside
     if (authContainer) {
         authContainer.addEventListener('click', (e) => {
             if (e.target === authContainer) closeAuthContainer();
         });
     }
     
-    // Modal close button
     const modalCloseButton = document.querySelector('.modal-overlay .back-button');
     if (modalCloseButton) {
         modalCloseButton.addEventListener('click', closeModal);
     }
     
-    // Navigation links
     const homeLinks = document.querySelectorAll('.nav-link[href="#"]');
     homeLinks.forEach(link => {
         if (link.textContent === 'Головна') {
@@ -159,19 +232,16 @@ function setupEventListeners() {
         } else if (link.textContent === 'Про нас') {
             link.addEventListener('click', (e) => { 
                 e.preventDefault(); 
-                // In a real app, you'd navigate to about page
                 console.log('Navigating to About page'); 
             });
         }
     });
     
-    // User profile area
     const userProfile = document.querySelector('.user-profile');
     if (userProfile) {
         userProfile.addEventListener('click', goToProfile);
     }
     
-    // Logout button
     const logoutButton = document.getElementById('logoutButton');
     if (logoutButton) {
         logoutButton.addEventListener('click', (e) => {
@@ -180,43 +250,50 @@ function setupEventListeners() {
         });
     }
     
-    // "Перейти" buttons on needs cards
     const cardButtons = document.querySelectorAll('.card-button');
     cardButtons.forEach(button => {
         if (button.textContent === 'Перейти') {
+            button.removeAttribute('onclick');
             button.addEventListener('click', openModal);
         }
     });
     
-    // Edit profile button
-    const editProfileButton = document.getElementById('editProfileButton');
-    if (editProfileButton) {
-        editProfileButton.addEventListener('click', editProfile);
-    }
-    
-    // Profile image upload
-    const profileImage = document.querySelector('.profile-image');
-    if (profileImage && !profileImage.querySelector('input')) {
-        profileImage.addEventListener('click', () => {
-            // Create file input if it doesn't exist
-            let fileInput = document.getElementById('profilePictureInput');
-            if (!fileInput) {
-                fileInput = document.createElement('input');
+    const profileImages = document.querySelectorAll('.profile-image');
+    profileImages.forEach(profileImage => {
+        if (!profileImage.hasAttribute('data-listener-attached')) {
+            profileImage.setAttribute('data-listener-attached', 'true');
+            profileImage.addEventListener('click', function() {
+                const fileInput = document.createElement('input');
                 fileInput.type = 'file';
-                fileInput.id = 'profilePictureInput';
                 fileInput.accept = 'image/*';
                 fileInput.style.display = 'none';
-                fileInput.addEventListener('change', previewImage);
+                fileInput.addEventListener('change', function(e) {
+                    if (e.target.files && e.target.files.length > 0) {
+                        const file = e.target.files[0];
+                        if (file) {
+                            const reader = new FileReader();
+                            reader.onload = function(e) {
+                                profileImage.innerHTML = `<img src="${e.target.result}" class="avatar-image" alt="Profile Picture">`;
+                                const uploadMsg = document.getElementById('uploadSuccessMessage');
+                                if (uploadMsg) {
+                                    uploadMsg.style.display = 'block';
+                                    setTimeout(() => {
+                                        uploadMsg.style.display = 'none';
+                                    }, 3000);
+                                }
+                            };
+                            reader.readAsDataURL(file);
+                        }
+                    }
+                });
                 document.body.appendChild(fileInput);
-            }
-            fileInput.click();
-        });
-    }
+                fileInput.click();
+            });
+        }
+    });
     
-    // Form submissions
     setupFormListeners();
     
-    // Profile form in change_profile.html
     const profileForm = document.querySelector('.container form');
     if (profileForm) {
         const cancelBtn = profileForm.querySelector('.btn-cancel');
@@ -229,17 +306,11 @@ function setupEventListeners() {
         
         profileForm.addEventListener('submit', (e) => {
             e.preventDefault();
-            // In a real app, you'd send form data to server
             console.log('Profile form submitted');
-            
-            // Show success message
             alert('Профіль успішно оновлено!');
-            
-            // Redirect back to profile
             goToProfile();
         });
         
-        // Photo placeholder upload
         const photoPlaceholder = document.querySelector('.photo-placeholder .profile-image');
         if (photoPlaceholder) {
             photoPlaceholder.addEventListener('click', () => {
@@ -254,7 +325,6 @@ function setupEventListeners() {
         }
     }
     
-    // Check URL params for showing login
     const urlParams = new URLSearchParams(window.location.search);
     if (urlParams.get('showLogin') === 'true') {
         showLoginForm();
@@ -267,7 +337,6 @@ function setupFormListeners() {
         loginFormElement.addEventListener('submit', function(e) {
             e.preventDefault();
             
-            // Reset errors
             document.getElementById('emailError').style.display = 'none';
             document.getElementById('passwordError').style.display = 'none';
             document.getElementById('email').classList.remove('input-error');
@@ -278,14 +347,12 @@ function setupFormListeners() {
             
             let isValid = true;
             
-            // Validate email
             if (!isValidEmail(email)) {
                 document.getElementById('emailError').style.display = 'block';
                 document.getElementById('email').classList.add('input-error');
                 isValid = false;
             }
             
-            // Validate password
             if (!isValidPassword(password)) {
                 document.getElementById('passwordError').style.display = 'block';
                 document.getElementById('password').classList.add('input-error');
@@ -293,12 +360,19 @@ function setupFormListeners() {
             }
             
             if (isValid) {
-                // Show loading indicator
                 loginLoading.style.display = 'block';
                 
-                // In a real app, you'd send a fetch request
-                // Simulate successful login
                 setTimeout(function() {
+                    const mockUser = {
+                        id: 1,
+                        username: email.split('@')[0],
+                        email: email,
+                        firstName: 'Користувач',
+                        lastName: 'Системи'
+                    };
+                    
+                    saveUserData(mockUser);
+                    
                     loginLoading.style.display = 'none';
                     redirectToNeeds();
                 }, 1000);
@@ -310,7 +384,6 @@ function setupFormListeners() {
         registerFormElement.addEventListener('submit', function(e) {
             e.preventDefault();
             
-            // Reset errors
             const errorElements = ['nameError', 'surnameError', 'regEmailError', 'usernameError', 'regPasswordError', 'password2Error'];
             const inputElements = ['reg-name', 'reg-surname', 'reg-email', 'reg-username', 'reg-password', 'reg-password2'];
             
@@ -324,7 +397,6 @@ function setupFormListeners() {
                 if (element) element.classList.remove('input-error');
             });
             
-            // Get form values
             const name = document.getElementById('reg-name').value;
             const surname = document.getElementById('reg-surname').value;
             const email = document.getElementById('reg-email').value;
@@ -334,7 +406,6 @@ function setupFormListeners() {
             
             let isValid = true;
             
-            // Validate fields
             if (!name) {
                 document.getElementById('nameError').style.display = 'block';
                 document.getElementById('reg-name').classList.add('input-error');
@@ -372,12 +443,19 @@ function setupFormListeners() {
             }
             
             if (isValid) {
-                // Show loading indicator
                 registerLoading.style.display = 'block';
                 
-                // In a real app, you'd send a fetch request
-                // Simulate successful registration
                 setTimeout(function() {
+                    const mockUser = {
+                        id: 1,
+                        username: username,
+                        email: email,
+                        firstName: name,
+                        lastName: surname
+                    };
+                    
+                    saveUserData(mockUser);
+                    
                     registerLoading.style.display = 'none';
                     redirectToNeeds();
                 }, 1000);
@@ -387,7 +465,18 @@ function setupFormListeners() {
 }
 
 // Initialize when DOM is loaded
-document.addEventListener('DOMContentLoaded', setupEventListeners);
+document.addEventListener('DOMContentLoaded', function() {
+    setupEventListeners();
+    displayUsername();
+    setupProfileImageUploaders(); // Add this line
+    
+    window.addEventListener('pageshow', function(event) {
+        if (event.persisted) {
+            setupEventListeners();
+            displayUsername();
+        }
+    });
+});
 
 // Make functions available globally
 window.navigateTo = navigateTo;

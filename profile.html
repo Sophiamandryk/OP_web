@@ -220,28 +220,33 @@
     </div>
 
     <script>
-        // Add event listener to the "Редагувати профіль" button
-        document.getElementById('editProfileButton').addEventListener('click', function() {
-            // Redirect to change_profile.html when clicked
-            window.location.href = 'change_profile.html';
-        });
-        
-        // Add event listener to the back button (both the arrow and "Профіль користувача" text)
-        document.getElementById('backButton').addEventListener('click', function(event) {
-            event.preventDefault(); // Prevent default link behavior
-            // Redirect to detailed_needs.html when clicked
-            window.location.href = 'detailed_needs.html';
-        });
-
-        // Add event listener to the "Головна" navigation link
-        document.getElementById('homeLink').addEventListener('click', function(event) {
-            event.preventDefault(); // Prevent default link behavior
-            // Redirect to indexs_new.html when clicked
-            window.location.href = 'indexs_new.html';
-        });
-
         document.addEventListener('DOMContentLoaded', function() {
-            // Add functionality to menu buttons
+            // Display username
+            if (typeof displayUsername === 'function') {
+                displayUsername();
+            }
+            
+            // Setup button handlers - use direct URL navigation
+            document.getElementById('editProfileButton').addEventListener('click', function() {
+                window.location.href = 'change_profile.html';
+            });
+            
+            document.getElementById('backButton').addEventListener('click', function(event) {
+                event.preventDefault();
+                window.location.href = 'detailed_needs.html';
+            });
+
+            document.getElementById('homeLink').addEventListener('click', function(event) {
+                event.preventDefault();
+                // Use direct navigation or function if available
+                if (typeof goToHome === 'function') {
+                    goToHome();
+                } else {
+                    window.location.href = 'needs.html';
+                }
+            });
+            
+            // Menu button functionality
             const menuButtons = document.querySelectorAll('.menu-button');
             menuButtons.forEach(button => {
                 button.addEventListener('click', function() {
@@ -249,35 +254,54 @@
                 });
             });
             
-            // Make the profile image clickable for upload
+            // Fix for profile image upload with direct implementation
             const profileImage = document.getElementById('profileImageContainer');
-            profileImage.addEventListener('click', function() {
-                const fileInput = document.createElement('input');
-                fileInput.type = 'file';
-                fileInput.accept = 'image/*';
-                fileInput.style.display = 'none';
-                fileInput.addEventListener('change', function(e) {
-                    const file = e.target.files[0];
-                    if (file) {
-                        const reader = new FileReader();
-                        reader.onload = function(e) {
-                            profileImage.innerHTML = `<img src="${e.target.result}" class="avatar-image" alt="Profile Picture">`;
-                            document.getElementById('uploadSuccessMessage').style.display = 'block';
-                            setTimeout(() => {
-                                document.getElementById('uploadSuccessMessage').style.display = 'none';
-                            }, 3000);
-                        };
-                        reader.readAsDataURL(file);
-                    }
+            if (profileImage) {
+                profileImage.addEventListener('click', function() {
+                    // Create a file input element
+                    const fileInput = document.createElement('input');
+                    fileInput.type = 'file';
+                    fileInput.accept = 'image/*';
+                    fileInput.style.display = 'none';
+                    
+                    // Handle file selection directly here
+                    fileInput.addEventListener('change', function() {
+                        const file = this.files[0];
+                        if (file) {
+                            const reader = new FileReader();
+                            reader.onload = function(e) {
+                                // Replace the container content with the image
+                                profileImage.innerHTML = `<img src="${e.target.result}" class="avatar-image" alt="Profile Picture">`;
+                                
+                                // Show success message
+                                document.getElementById('uploadSuccessMessage').style.display = 'block';
+                                setTimeout(() => {
+                                    document.getElementById('uploadSuccessMessage').style.display = 'none';
+                                }, 3000);
+                            };
+                            reader.readAsDataURL(file);
+                        }
+                    });
+                    
+                    // Add to DOM temporarily, click it, then remove
+                    document.body.appendChild(fileInput);
+                    fileInput.click();
+                    setTimeout(() => document.body.removeChild(fileInput), 100);
                 });
-                document.body.appendChild(fileInput);
-                fileInput.click();
-            });
+            }
             
             // Add functionality to "Зробити запит" button
-            document.querySelector('.nav-logo').addEventListener('click', function() {
-                navigateTo('make_request.html');
-            });
+            const makeRequestButton = document.querySelector('.nav-logo');
+            if (makeRequestButton) {
+                makeRequestButton.addEventListener('click', function() {
+                    window.location.href = 'make_request.html';
+                });
+            }
+            
+            // Initialize any global functions if needed
+            if (typeof setupProfileImageUploaders === 'function') {
+                setupProfileImageUploaders();
+            }
         });
     </script>
 </body>

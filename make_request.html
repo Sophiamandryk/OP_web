@@ -303,6 +303,15 @@
     <script src="static/js/main.js"></script>
     <script>
         document.addEventListener('DOMContentLoaded', function() {
+            // Display username
+            displayUsername();
+            
+            // Set up home link
+            document.getElementById('homeLink').addEventListener('click', function(e) {
+                e.preventDefault();
+                goToHome();
+            });
+            
             // Handle file upload
             const uploadContainer = document.getElementById('uploadContainer');
             const photoUpload = document.getElementById('photoUpload');
