@@ -34,10 +34,14 @@
         }
         
         .nav-logo {
+            display: inline-block;
+            padding: 10px 20px;
+            border: 2px solid var(--button-green);
+            border-radius: 50px;
+            background-color: var(--button-green);
+            color: var(--text-color);
             font-weight: bold;
-            font-size: 1.2rem;
-            color: white;
-            cursor: pointer;
+            text-decoration: none;
         }
         
         .nav-links {
@@ -82,16 +86,17 @@
             padding: 30px;
             position: relative;
         }
+
         
         .back-button {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            text-decoration: none;
+            display: inline-block;
+            padding: 10px 20px;
+            border: 2px solid var(--button-green);
+            border-radius: 50px;
+            background-color: var(--button-green);
             color: var(--text-color);
             font-weight: bold;
-            margin-bottom: 20px;
-            cursor: pointer;
+            text-decoration: none;
         }
         
         .profile-header {
@@ -192,7 +197,7 @@
     
     <div class="profile-container">
         <a href="#" class="back-button" id="backButton">
-            ← Профіль користувача
+            ← Назад
         </a>
         
         <div class="profile-header">
